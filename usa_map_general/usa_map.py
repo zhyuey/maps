@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 import csv
+import sys, os
 import shapefile
 import numpy as np
 import matplotlib as mpl
@@ -15,9 +16,9 @@ from matplotlib.collections import LineCollection
 from matplotlib.patches import PathPatch
 from matplotlib.font_manager import FontProperties
 
+curdir = sys.path[0] + '\\'
 
-
-mpl.rcParams['font.family'] = 'Sans Serif'
+mpl.rcParams['font.family'] = 'sans-serif'
 
 thisblue = '#23238e'
 fig = plt.figure(figsize=(11.7, 8.3))
@@ -46,7 +47,7 @@ m.drawmeridians(np.arange(x1, x2, 5.), labels=[
 
 
 
-r = shapefile.Reader("USA_adm1")
+r = shapefile.Reader(curdir + "USA_adm1")
 shapes = r.shapes()
 records = r.records()
 
@@ -78,7 +79,7 @@ for record, shape in zip(records, shapes):
     cnt += 1
 
 
-infile = open('state_info_revised.csv','r')
+infile = open(curdir +'state_info_revised.csv','r')
 csvfile = csv.reader(infile)
 
 
