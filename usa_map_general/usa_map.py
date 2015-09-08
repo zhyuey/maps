@@ -4,6 +4,9 @@ from __future__ import unicode_literals
 import csv
 import shapefile
 import numpy as np
+import matplotlib as mpl
+mpl.use('Agg')
+from matplotlib import cm
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 from matplotlib.patches import Polygon
@@ -14,9 +17,7 @@ from matplotlib.font_manager import FontProperties
 
 
 
-import matplotlib as mpl
-from matplotlib import cm
-mpl.rcParams['font.family'] = 'Comic Sans MS'
+mpl.rcParams['font.family'] = 'Sans Serif'
 
 thisblue = '#23238e'
 fig = plt.figure(figsize=(11.7, 8.3))
@@ -45,7 +46,7 @@ m.drawmeridians(np.arange(x1, x2, 5.), labels=[
 
 
 
-r = shapefile.Reader("usa_adm1")
+r = shapefile.Reader("USA_adm1")
 shapes = r.shapes()
 records = r.records()
 
@@ -54,11 +55,11 @@ records = r.records()
 
 cnt = 0
 for record, shape in zip(records, shapes):
-    print cnt
-    
+    print(cnt)
+
     lons,lats = zip(*shape.points)
     data = np.array(m(lons, lats)).T
- 
+
     if len(shape.parts) == 1:
         segs = [data,]
     else:
@@ -68,7 +69,7 @@ for record, shape in zip(records, shapes):
             index2 = shape.parts[i]
             segs.append(data[index:index2])
         segs.append(data[index2:])
-         
+
     lines = LineCollection(segs,antialiaseds=(1,))
     lines.set_facecolors(np.random.rand(3, 1) * 0.5 + 0.5)
     lines.set_edgecolors('k')
@@ -77,7 +78,7 @@ for record, shape in zip(records, shapes):
     cnt += 1
 
 
-infile = file('state_info_revised.csv','r')
+infile = open('state_info_revised.csv','r')
 csvfile = csv.reader(infile)
 
 
@@ -106,4 +107,4 @@ plt.title('Map of contiguous United States', fontsize=24)
 plt.savefig('usa_state_300.png', dpi=300)
 # plt.savefig('usa_state_600.png', dpi=600)
 
-    
+
