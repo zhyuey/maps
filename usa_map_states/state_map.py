@@ -47,19 +47,19 @@ for line in csvfile:
     m = Basemap(resolution='h', projection='merc', llcrnrlat=y1,
             urcrnrlat=y2, llcrnrlon=x1, urcrnrlon=x2)
 
-    
+
     m.drawmapboundary(fill_color='#0000aa')
     m.fillcontinents(color='w', lake_color='#0000aa')
     # m.drawstates(linewidth=0.5)
     m.drawcountries(linewidth=0.5)
-    
-    
+
+
 
     for record, shape in zip(records,shapes):
         if line[8].find(record[3]) > -1:
             lons,lats = zip(*shape.points)
             data = np.array(m(lons, lats)).T
- 
+
             if len(shape.parts) == 1:
                 segs = [data,]
             else:
@@ -69,7 +69,7 @@ for line in csvfile:
                     index2 = shape.parts[i]
                     segs.append(data[index:index2])
                 segs.append(data[index2:])
-         
+
             lines = LineCollection(segs,antialiaseds=(1,))
             lines.set_facecolors(np.random.rand(3, 1) * 0.5 + 0.5)
             lines.set_edgecolors('k')
@@ -81,7 +81,7 @@ for line in csvfile:
         lp.set_facecolor('#0000aa')
         ax.add_patch(lp)
 
-    
+
     # m.drawrivers(linewidth=0.5, zorder = 3, color='blue')
 
     lon = (float(line[0]) + float(line[2]))/2 + float(line[5])
@@ -90,9 +90,10 @@ for line in csvfile:
     name = line[4].replace('\\n', '\n')
 
     plt.text(x, y, name, horizontalalignment='center', verticalalignment='center', fontsize=24)
-            
 
-    filename = sys.path[0] + '\\state_img\\m_' + line[4] + '.png'
+
+    filename = sys.path[0] + '/state_img/m_' + line[4] + '.png'
+    print(filename)
     plt.savefig(filename, dpi=300)
 
     cnt_total += 1

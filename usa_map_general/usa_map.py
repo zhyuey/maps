@@ -16,7 +16,7 @@ from matplotlib.collections import LineCollection
 from matplotlib.patches import PathPatch
 from matplotlib.font_manager import FontProperties
 
-curdir = sys.path[0] + '\\'
+curdir = sys.path[0] + '/'
 
 mpl.rcParams['font.family'] = 'sans-serif'
 
